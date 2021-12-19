@@ -1,23 +1,33 @@
-import logo from './logo.svg';
+import react, { useState } from 'react';
 import './App.css';
+import StartPage from './components/startpage';
+import Details from './components/contryDetails';
+import Header from "./components/header"
 
 function App() {
+
+  const [countryDetails, setCountryDetails] = useState("");
+
+  function fetchData(country) {
+    fetch(`https://restcountries.com/v2/name/${country}`)
+      .then(function (response) {
+        response.json()
+          .then((jsonData) => {
+            setCountryDetails(jsonData);
+            console.log(jsonData);
+          });
+      })
+      .catch(function (error) {
+
+      });
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      < Header />
+      {countryDetails
+        ? < Details countryDetails={countryDetails} />
+        : <StartPage fetchData={fetchData} />}
     </div>
   );
 }
