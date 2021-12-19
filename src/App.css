@@ -30,6 +30,7 @@
 input{
   height: 24px;
   width: 200px;
+  padding: 3px 15px;
   border-radius: 5px;
 }
 .input-div{
